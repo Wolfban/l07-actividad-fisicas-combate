@@ -12,8 +12,8 @@ fun createPlayer(): GameObject {
         x = 20.0
         y = 0.0
         spriteName = "norman_idle"
-        spriteWidth = 16
-        spriteHeight = 15
+        spriteWidth = 48
+        spriteHeight = 45
         tags = Tags.PLAYER or Tags.UNDEAD
         collisionMask = Tags.LIVING
         hp = 5
@@ -24,7 +24,7 @@ fun createPlayer(): GameObject {
 /**
  * TODO Paso 4.1: Crea el proyectil de hechizo con físicas y colisiones:
  * - spriteName = "spell_skull"
- * - spriteWidth = 4, spriteHeight = 4
+ * - spriteWidth = 24, spriteHeight = 24
  * - tags = Tags.SPELL
  * - collisionMask = Tags.LIVING
  * - mass = 100.0 (afectado por la gravedad)
@@ -36,8 +36,8 @@ fun createPlayer(): GameObject {
 fun createSpell(): GameObject {
     return GameObject().apply {
         spriteName = "spell_skull"
-        spriteWidth = 4
-        spriteHeight = 4
+        spriteWidth = 24
+        spriteHeight = 24
         tags = Tags.NONE // TODO Paso 4.1: Asigna Tags.SPELL
         collisionMask = Tags.NONE // TODO Paso 4.1: Asigna Tags.LIVING
         mass = 0.0 // TODO: Asigna 100.0
@@ -55,8 +55,8 @@ fun createVillager(): GameObject {
         x = 350.0
         y = 0.0
         spriteName = "villager"
-        spriteWidth = 14
-        spriteHeight = 15
+        spriteWidth = 42
+        spriteHeight = 45
         tags = Tags.LIVING or Tags.MOBILE
         collisionMask = Tags.PLAYER or Tags.SPELL
         hp = 2

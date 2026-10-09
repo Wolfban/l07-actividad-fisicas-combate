@@ -41,15 +41,15 @@ suspend fun launchCombatDemo() {
         val game = Game()
         val player = createPlayer()
         game.player = player
-        game.spawn(player, 60.0, 50.0)
+        game.spawn(player, 60.0, 0.0)
 
-        // Spawneamos 3 aldeanos objetivo
+        // Spawneamos 3 aldeanos objetivo distribuidos en la arena
         val v1 = createVillager()
-        game.spawn(v1, 450.0, 50.0)
+        game.spawn(v1, 320.0, 0.0)
         val v2 = createVillager()
-        game.spawn(v2, 550.0, 50.0)
+        game.spawn(v2, 460.0, 0.0)
         val v3 = createVillager()
-        game.spawn(v3, 650.0, 50.0)
+        game.spawn(v3, 600.0, 0.0)
 
         // UI Header
         solidRect(800.0, 60.0, Colors["#181825"])
@@ -85,11 +85,16 @@ suspend fun launchCombatDemo() {
             onMove {
                 val mx = it.currentPosGlobal.x - arena.x
                 val my = (arena.y + arena.height) - it.currentPosGlobal.y
-                val px = player.x
-                val py = player.y
+                val px = player.x + player.spriteWidth / 2.0
+                val py = player.y + player.spriteHeight / 2.0
                 game.spell.targetAngle = atan2(my - py, mx - px)
             }
             down {
+                val mx = it.currentPosGlobal.x - arena.x
+                val my = (arena.y + arena.height) - it.currentPosGlobal.y
+                val px = player.x + player.spriteWidth / 2.0
+                val py = player.y + player.spriteHeight / 2.0
+                game.spell.targetAngle = atan2(my - py, mx - px)
                 game.castSpell()
             }
         }
@@ -114,7 +119,7 @@ suspend fun launchCombatDemo() {
                 }
 
                 val screenX = arena.x + obj.x
-                val screenY = (arena.y + arena.height) - obj.y - obj.spriteHeight * 3.0
+                val screenY = (arena.y + arena.height) - obj.y - obj.spriteHeight
 
                 objectsContainer.image(slice) {
                     xy(screenX, screenY)
@@ -122,7 +127,9 @@ suspend fun launchCombatDemo() {
                 }
             }
 
-            infoText.text = "Cargas de Hechizo: ${game.spell.casts}/${game.spell.maxCasts}  |  Enemigos Vivos: ${game.objects.count { it.isTagged(Tags.LIVING) }}  |  Ángulo: ${(game.spell.targetAngle * 180 / 3.14159).toInt()}°"
+            val livingCount = game.objects.count { it.isTagged(Tags.LIVING) }
+            val status = if (livingCount == 0) " | 🏆 ¡TODOS LOS ENEMIGOS DERROTADOS!" else ""
+            infoText.text = "Cargas de Hechizo: ${game.spell.casts}/${game.spell.maxCasts}  |  Enemigos Vivos: $livingCount  |  Ángulo: ${(game.spell.targetAngle * 180 / 3.14159).toInt()}°$status"
         }
     }
 }

@@ -12,7 +12,7 @@ data class Stage(
 
 data class SpellState(
     var targetAngle: Double = 0.5,
-    var basePower: Double = 180.0,
+    var basePower: Double = 380.0,
     var maxCasts: Int = 3,
     var casts: Int = 3,
     var castRechargeRate: Double = 1000.0,
@@ -74,7 +74,7 @@ class Game : GameSession {
 
             if (obj.y < lower || obj.y > upper) {
                 obj.y = clamp(obj.y, lower, upper)
-                if (abs(obj.vy) >= 10.0) {
+                if (abs(obj.vy) >= 10.0 || obj.despawnOnBounce) {
                     obj.onBounce()
                 }
                 obj.vy *= -obj.bounce
@@ -82,6 +82,12 @@ class Game : GameSession {
 
             if (obj.y == lower || obj.y == upper) {
                 obj.vx *= (1.0 - obj.friction)
+            }
+
+            if (obj.x < 0.0 || obj.x > stage.width) {
+                if (obj.isTagged(Tags.SPELL)) {
+                    despawn(obj)
+                }
             }
         }
 
