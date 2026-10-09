@@ -21,10 +21,8 @@ data class Rect2D(
      * - this.y + this.height > other.y
      */
     fun overlaps(other: Rect2D): Boolean {
-        return x < other.x + other.width &&
-               x + width > other.x &&
-               y < other.y + other.height &&
-               y + height > other.y
+        // TODO: Implementar la condición AABB
+        return false
     }
 }
 
@@ -34,7 +32,8 @@ data class Rect2D(
  * TODO Paso 2.2: Retorna un Point2D con x = cos(radians) e y = sin(radians).
  */
 fun vectorFromAngle(radians: Double): Point2D {
-    return Point2D(cos(radians), sin(radians))
+    // TODO: Retornar Point2D con cos(radians) y sin(radians)
+    return Point2D(0.0, 0.0)
 }
 
 fun clamp(value: Double, min: Double, max: Double): Double =

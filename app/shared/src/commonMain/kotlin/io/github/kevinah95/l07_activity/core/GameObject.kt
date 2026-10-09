@@ -45,7 +45,8 @@ open class GameObject {
      * 2. Su máscara de colisión coincide con las etiquetas del objetivo: (collisionMask and target.tags) != 0.
      */
     fun canCollideWith(target: GameObject): Boolean {
-        return this !== target && (collisionMask and target.tags) != 0
+        // TODO: Reemplaza este false por la condición requerida
+        return false
     }
 
     fun bounds(): Rect2D = Rect2D(x, y, spriteWidth.toDouble(), spriteHeight.toDouble())

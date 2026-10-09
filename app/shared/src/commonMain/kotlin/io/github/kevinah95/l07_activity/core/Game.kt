@@ -11,7 +11,7 @@ data class Stage(
 )
 
 data class SpellState(
-    var targetAngle: Double = 0.5, // Ángulo hacia arriba y la derecha
+    var targetAngle: Double = 0.5,
     var basePower: Double = 180.0,
     var maxCasts: Int = 3,
     var casts: Int = 3,
@@ -60,15 +60,13 @@ class Game : GameSession {
         val d = dtMs / 1000.0
         val currentObjects = objects.toList()
 
-        // TODO Paso 3.1: Integrar posición según velocidad
+        // TODO Paso 3.1: Integrar posición según velocidad (x += vx * d, y += vy * d)
         for (obj in currentObjects) {
-            obj.x += obj.vx * d
-            obj.y += obj.vy * d
+            // obj.x += obj.vx * d
+            // obj.y += obj.vy * d
 
             // TODO Paso 3.2: Aplicar aceleración de gravedad hacia abajo si tiene masa y está en el aire
-            if (obj.mass > 0 && obj.y > 0) {
-                obj.vy -= obj.mass * d
-            }
+            // if (obj.mass > 0 && obj.y > 0) { obj.vy -= obj.mass * d }
 
             // TODO Paso 3.3: Restricción contra el suelo y techo (rebote y fricción)
             val lower = stage.floor
@@ -97,9 +95,6 @@ class Game : GameSession {
         }
     }
 
-    /**
-     * Aplica daño a un objetivo y verifica si sus puntos de vida llegan a 0.
-     */
     fun damage(target: GameObject, amount: Int, dealer: GameObject? = null) {
         val dmg = Damage(amount, dealer)
         target.hp = clamp(target.hp - dmg.amount, 0, target.maxHp)
@@ -123,19 +118,7 @@ class Game : GameSession {
      * 7. Retornar true.
      */
     fun castSpell(): Boolean {
-        if (spell.casts <= 0) return false
-        spell.casts--
-
-        val projectile = createSpell()
-        val dir = vectorFromAngle(spell.targetAngle)
-        val center = player.center()
-
-        projectile.x = center.x - projectile.spriteWidth / 2.0
-        projectile.y = center.y - projectile.spriteHeight / 2.0
-        projectile.vx = dir.x * spell.basePower
-        projectile.vy = dir.y * spell.basePower
-
-        spawn(projectile)
-        return true
+        // TODO: Completar la lógica de disparo
+        return false
     }
 }
