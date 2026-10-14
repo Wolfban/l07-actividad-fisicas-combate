@@ -16,7 +16,7 @@ object Tags {
     // - MOBILE: 1 shl 3 (8)
     // - PLAYER: 1 shl 4 (16)
     // - UNDEAD: 1 shl 5 (32)
-
+         // paso1
     const val CORPSE: Int = 1 shl 0
     const val LIVING: Int = 1 shl 1
     const val SPELL: Int = 1 shl 2
